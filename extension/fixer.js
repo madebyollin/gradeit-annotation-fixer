@@ -1,21 +1,21 @@
 (function(window, document, undefined) {
-	setup();
+    setup();
 
-	// Set up annotation-fixer button
-	function setup() {
+    // Set up annotation-fixer button
+    function setup() {
         let toolArea = document.querySelector(".hoveringtoolsarea");
-		if (window.annotations && toolArea) {
+        if (window.annotations && toolArea) {
             // Make a button to call autoMoveAnnotations()
-			let fixAnnotationsButton = document.createElement("a");
+            let fixAnnotationsButton = document.createElement("a");
             fixAnnotationsButton.innerHTML = "Reposition<br />Annotations";
             fixAnnotationsButton.style.cssText = "text-align: center;font-weight: bold;padding: 4px 8px;margin: 4px;background: rgb(255, 255, 204);border: 2px solid rgb(153, 0, 0);border-radius: 4px;cursor: pointer;user-select: none; display: block;";
             fixAnnotationsButton.onclick = autoMoveAnnotations;
-            
+
             // Add it to the top of the tool area
             toolArea.prepend(fixAnnotationsButton);
-		}
-	}
-    
+        }
+    }
+
     // Main entry point;
     // automatically adjusts annotations (up to an iteration limit)
     // until no annotations overlap
@@ -26,7 +26,7 @@
             }
         }
     }
-    
+
 
     // Single Iteration:
     // adjust annotations which overlap
@@ -34,9 +34,9 @@
     // by moving them up/down a line
     // returns {complete: true} if no annotations overlap
     function moveAnnotations() {
-        
+
         let textAnnotations = [];
-        
+
         // Find text (boxed) annotations only
         for (let i = 0; i < annotations.annotationList.length; i++) {
             let a = annotations.annotationList[i];
@@ -44,10 +44,10 @@
                 textAnnotations.push(a);
             }
         }
-    
+
         // Sort them in order of vertical position
-        textAnnotations.sort((a, b) =>  annotations.lineNumberFor(a.start) - annotations.lineNumberFor(b.start));
-        
+        textAnnotations.sort((a, b) => annotations.lineNumberFor(a.start) - annotations.lineNumberFor(b.start));
+
         // Move each one up or down, depending on what it overlaps with
         let complete = true;
         for (let i = 0; i < textAnnotations.length; i++) {
@@ -58,20 +58,24 @@
                 let click = new MouseEvent('click');
                 document.getElementById(a.id).dispatchEvent(click);
                 complete = false;
-            } else if (i < textAnnotations.length - 1 
-                && checkOverlapOfAnnotations(a, textAnnotations[i + 1])) {
+            } else if (i < textAnnotations.length - 1 &&
+                checkOverlapOfAnnotations(a, textAnnotations[i + 1])) {
                 // switch to selection mode
                 $("select").click();
                 // if we overlap with the next, move *up*
-                let click = new MouseEvent('click', {shiftKey: true});
+                let click = new MouseEvent('click', {
+                    shiftKey: true
+                });
                 document.getElementById(a.id).dispatchEvent(click);
                 complete = false;
             }
         }
-        
-        return {complete: complete};
+
+        return {
+            complete: complete
+        };
     }
-    
+
     // Helper function;
     // Return true iff the annotation objects a1 and a2
     // have vertically-overlapping DOM elements
@@ -83,8 +87,8 @@
         let b1 = e1.getBoundingClientRect();
         let b2 = e2.getBoundingClientRect();
         // check intersection on y coordinate only
-        return (b1.top < b2.bottom && b1.bottom > b2.top) || 
-               (b2.top < b1.bottom && b2.bottom > b1.top);
+        return (b1.top < b2.bottom && b1.bottom > b2.top) ||
+            (b2.top < b1.bottom && b2.bottom > b1.top);
     }
 
 })(this, this.document);

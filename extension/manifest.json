@@ -1,13 +1,13 @@
 {
-  "manifest_version": 2,
-  "name": "GradeIt Annotation Fixer",
-  "description": "Add a button to fix GradeIt annotation layout",
-  "version": "1.0",
-  "content_scripts": [{
-    "matches": ["*://gradeit.cs.washington.edu/uwcse/admin/annotate_view.php*"],
-    "js": ["injector.js"],
-    "run_at": "document_end",
-    "all_frames": true
-  }],
-  "web_accessible_resources": ["fixer.js"]
+    "manifest_version": 2,
+    "name": "GradeIt Annotation Fixer",
+    "description": "Add a button to fix GradeIt annotation layout",
+    "version": "1.0",
+    "content_scripts": [{
+        "matches": ["*://gradeit.cs.washington.edu/uwcse/admin/annotate_view.php*"],
+        "js": ["injector.js"],
+        "run_at": "document_end",
+        "all_frames": true
+    }],
+    "web_accessible_resources": ["fixer.js"]
 }
