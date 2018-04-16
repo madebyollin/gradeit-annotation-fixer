@@ -8,7 +8,7 @@ Adds a button to GradeIt (gradeit.cs.washington.edu) to move annotations so they
 
 Download the repo.
 
-Go to [chrome://extensions]([chrome://extensions) and choose "load unpacked extension", then select the `extension` subfolder of this repo.
+Go to [chrome://extensions](chrome://extensions) and choose "load unpacked extension", then select the `extension` subfolder of this repo.
 
 ## Usage:
 
