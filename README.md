@@ -1,12 +1,15 @@
 # GradeIt annotation fixer
 
-I was weary of clicking/shift-clicking GradeIt annotations to make them not overlap, so I made a chrome extension.
+Adds a button to GradeIt (gradeit.cs.washington.edu) to move annotations so they don't overlap.
+
+![](demo.gif)
 
 ## Installation:
 
-download the repo
-go to chrome://extensions and choose "load unpacked extension" and choose the `extension` folder.
+Download the repo.
+
+Go to [chrome://extensions]([chrome://extensions) and choose "load unpacked extension", then select the `extension` subfolder of this repo.
 
 ## Usage:
 
-click the button
+Make some annotations, then click the button!
