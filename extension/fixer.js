@@ -58,8 +58,6 @@
 	// not sure what the event is here, oh well, just keep trying
 	let setup = () => {
         let toolArea = document.querySelector(".hoveringtoolsarea");
-        console.log("window.annotations: ", window.annotations, "toolArea:", toolArea);
-        console.log(window);
 		if (window.annotations && toolArea) {
 			let fixAnnotationsButton = document.createElement("a");
             fixAnnotationsButton.textContent = "Fix Annotations";
@@ -68,7 +66,6 @@
             toolArea.prepend(fixAnnotationsButton);
 		} else {
             window.setTimeout(setup, 5000);
-            console.log("Not running in correct iframe");
 		}
 	}
 	setup();
