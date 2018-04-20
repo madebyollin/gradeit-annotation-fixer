@@ -1,5 +1,7 @@
 (function(window, document, undefined) {
     setup();
+    const RACE_CONDITION_DELAY_MS = 50;
+    const FONT_SIZE_BUG_MARGIN_PX = 5;
 
     // Set up annotation-fixer button
     function setup() {
@@ -33,7 +35,7 @@
     // so that they are more spread out
     // by moving them up/down a line
     // returns {complete: true} if no annotations overlap
-    function moveAnnotations() {
+    async function moveAnnotations() {
 
         let textAnnotations = [];
 
@@ -58,6 +60,7 @@
                 let click = new MouseEvent('click');
                 document.getElementById(a.id).dispatchEvent(click);
                 complete = false;
+                await sleep(RACE_CONDITION_DELAY_MS);
             } else if (i < textAnnotations.length - 1 &&
                 checkOverlapOfAnnotations(a, textAnnotations[i + 1])) {
                 // switch to selection mode
@@ -68,7 +71,9 @@
                 });
                 document.getElementById(a.id).dispatchEvent(click);
                 complete = false;
+                await sleep(RACE_CONDITION_DELAY_MS);
             }
+
         }
 
         return {
@@ -80,6 +85,7 @@
     // Return true iff the annotation objects a1 and a2
     // have vertically-overlapping DOM elements
     function checkOverlapOfAnnotations(a1, a2) {
+        let margin = FONT_SIZE_BUG_MARGIN_PX;
         // get the DOM elements for each annotation
         let e1 = document.getElementById(a1.id);
         let e2 = document.getElementById(a2.id);
@@ -87,8 +93,12 @@
         let b1 = e1.getBoundingClientRect();
         let b2 = e2.getBoundingClientRect();
         // check intersection on y coordinate only
-        return (b1.top < b2.bottom && b1.bottom > b2.top) ||
-            (b2.top < b1.bottom && b2.bottom > b1.top);
+        return (b1.top < b2.bottom + margin && b1.bottom + margin > b2.top) ||
+            (b2.top < b1.bottom + margin && b2.bottom + margin> b1.top);
+    }
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
 })(this, this.document);
